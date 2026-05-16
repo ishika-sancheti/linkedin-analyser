@@ -1,0 +1,20 @@
+{
+    "name": "LinkedIn Analyser",
+    "description": "Analyse LinkedIn job postings for relvant requirements.",
+    "version": "1.0",
+    "manifest_version": 3,
+    "content_scripts": [
+        {
+            "matches": ["https://www.linkedin.com/*"],
+            "js": ["contentScript.js"]
+        }
+    ]
+    ,"permissions": [
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": [
+    "http://127.0.0.1:5000/*",
+    "https://www.linkedin.com/*"
+    ]
+}
