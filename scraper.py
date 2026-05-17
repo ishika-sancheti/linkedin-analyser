@@ -4,15 +4,17 @@ import re
 import time
 
 def get_job_id(keyword):
-    r=requests.get(f"https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords={keyword}")
-    soup=BeautifulSoup(r.text, 'html.parser')
-    inputTag=soup.find_all(attrs={"data-entity-urn": True})
     job_id=[]
-    for element in inputTag:
-        if re.match(r"urn:li:jobPosting:\d+", element['data-entity-urn']):
-            listing=element['data-entity-urn']
-            job_id_indv=listing.split(":")[-1]
-            job_id.append(job_id_indv)
+    for i in range(0, 50, 10):
+        r=requests.get(f"https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords={keyword}&start={i}")
+        soup=BeautifulSoup(r.text, 'html.parser')
+        inputTag=soup.find_all(attrs={"data-entity-urn": True})
+        
+        for element in inputTag:
+            if re.match(r"urn:li:jobPosting:\d+", element['data-entity-urn']):
+                listing=element['data-entity-urn']
+                job_id_indv=listing.split(":")[-1]
+                job_id.append(job_id_indv)
     return job_id
 
 # result = get_job_id(inputTag)
@@ -40,5 +42,5 @@ def scrape_all_jobs(keyword):
     return job_desc_list
 
 res=scrape_all_jobs("SDE")
-print(f"Total descriptions fetched: {len(res)}")        #just to check if all 10 are being printed
+print(f"Total descriptions fetched: {len(res)}")        #just to check if all 50 are being printed
 print(res)
