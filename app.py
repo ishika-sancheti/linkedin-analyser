@@ -18,8 +18,9 @@ def analyser():
         analyser_result=analyser_function(desc)
         for category, skill in analyser_result.items():
             consolidated[category].update(skill)
+    company_counts=Counter(companies)
     consolidated=dict(consolidated)
-    return jsonify({"skills": consolidated, "companies": companies})
+    return jsonify({"skills": consolidated, "companies": dict(company_counts)})
 
 if __name__=='__main__':
     app.run(debug=True, use_reloader=False)
