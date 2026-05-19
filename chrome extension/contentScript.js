@@ -1,35 +1,19 @@
-//the point of this is to check if the element exists
-function waitForElement(querySelector, timeout){
-    return new Promise((resolve, reject) => {
-        var timer=false;
-        let target=document.querySelector('[data-testid="expandable-text-box"]');
-        if (target) return resolve();
-        const observer=new MutationObserver(()=>{
-            if (document.querySelector('[data-testid="expandable-text-box"]')){
-                observer.disconnect();
-                if (timer!==false) clearTimeout(timer);
-                return resolve();
-            }
-        } );
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-        if (timeout) timer=setTimeout( ()=> {
-            observer.disconnect();
-            reject();
-        }, timeout);
-    }
-)}
+function downloadBlobAsFile(blob){
+    const fileURL=URL.createObjectURL(blob);
+    const downloadLink=document.createElement('a');
+    downloadLink.href=fileURL;
+    downloadLink.download='export.csv';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+}
 
-//this block is for taking the data and sending it to flask 
-//after making it into json etc
-async function getData(text) {
+async function fetchA(keyword) {
     const url="http://127.0.0.1:5000/analyze";
     try {
         const response = await fetch(url, {
             method: "POST",
-            body: JSON.stringify({text: text}),
+            body: JSON.stringify({keyword: keyword}),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -37,23 +21,16 @@ async function getData(text) {
         if (!response.ok) {
             throw new Error(`Response Status: ${response.status}`);
         }
-        const result = await response.json();
-        console.log(result);
+        const result = await response.blob();
+        downloadBlobAsFile(result);
     } catch(error) {
         console.error(error.message);
     }
 }
 
-//making both of them work together
-async function main(){
-    try{
-        await waitForElement('[data-testid="expandable-text-box"]', 5000);
-        let text=document.querySelector('[data-testid="expandable-text-box"]').innerText;
-        await getData(text);
-    }
-    catch(error){
-        console.error("Element not found within the specified timeout.");
-    }
+async function main(keyword){
+    await fetchA(keyword)
 }
 
-main();
+const keyword=new URL(window.location.href).searchParams.get('keywords')
+main(keyword);
