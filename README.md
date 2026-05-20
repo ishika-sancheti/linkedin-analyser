@@ -1,335 +1,157 @@
-# LinkedIn Job Market Analyzer
+# LinkedIn Job Analyser
 
-A Chrome extension + Python backend application that analyzes LinkedIn job postings to identify the most in-demand skills, tools, certifications, and education requirements for a chosen role.
+A Chrome extension that analyses LinkedIn job search results and tells you what skills, tools, frameworks, and qualifications are most in demand for any role — automatically.
 
-## Overview
+Search for a role on LinkedIn, and the extension scrapes the top 50 job postings, analyses them, and downloads a ranked CSV report to your computer.
 
-Job seekers often know **what field they want to enter**, but struggle to answer an important question:
+---
 
-**“What skills do employers actually expect for this role?”**
+## What It Does
 
-Manually reading dozens of job postings is repetitive, time-consuming, and inefficient.
+When you search for a role on LinkedIn Jobs, the extension:
 
-**LinkedIn Job Market Analyzer** automates this process by extracting job description data from LinkedIn job listings, analyzing the text for relevant requirements, and generating a structured report for the user.
+1. Reads the search keyword from the URL
+2. Sends it to a local Flask backend
+3. The backend scrapes 50 job postings using LinkedIn's guest API
+4. Analyses each posting against a keyword dictionary
+5. Consolidates and ranks skills across all 50 jobs
+6. Downloads a CSV file with ranked skills by category and company breakdown
 
-This helps students, career switchers, and professionals understand the market demand for a given role.
+---
 
-## Problem Statement
+## Output
 
-Suppose someone wants to become:
+The downloaded CSV contains:
 
-- Software Engineer
-- Data Analyst
-- Product Manager
-- Machine Learning Engineer
+- **Technical Skills** — programming languages, methodologies, concepts
+- **Tools and Technologies** — cloud platforms, DevOps tools, software
+- **Frameworks and Libraries** — React, Django, TensorFlow, etc.
+- **Education** — degree requirements
+- **Certifications** — required certifications
+- **Experience** — role types and levels
+- **Companies** — which companies appeared in the 50 results and how many times
 
-They may not know:
+Each skill shows how many of the 50 job postings mentioned it, giving you a clear picture of what the market actually wants.
 
-- which programming languages are most requested
-- which tools and technologies are commonly required
-- whether certifications matter
-- expected education qualifications
-- role seniority expectations
-
-This project solves that by automatically collecting and analyzing job posting data.
-
-## Solution Architecture
-
-This application uses a **client-server architecture**.
-
-### Frontend (Chrome Extension)
-
-The Chrome extension:
-
-- runs on LinkedIn job pages
-- extracts job description text
-- waits for dynamic LinkedIn content to load
-- sends extracted data to the backend for analysis
-
-### Backend (Python + Flask)
-
-The backend:
-
-- receives scraped job posting text
-- analyzes content using keyword-based categorization
-- identifies relevant skills and qualifications
-- returns structured results
-- can generate downloadable Excel reports
-
-## Architecture Flow
-
-```text
-User opens LinkedIn Jobs
-        ↓
-Chrome Extension injects content script
-        ↓
-Job description text is scraped
-        ↓
-Data sent to Flask backend via API
-        ↓
-Python analyzer processes text
-        ↓
-Skills + requirements categorized
-        ↓
-Excel report generated
-        ↓
-User downloads analysis
-```
-
-## Features
-
-- LinkedIn job posting scraping
-- Automated skill extraction
-- Technical skills detection
-- Tools and software identification
-- Framework/library detection
-- Certification extraction
-- Education requirement detection
-- Role type classification
-- Excel report generation
-- Chrome extension integration
-- Client-server architecture implementation
+---
 
 ## Tech Stack
 
-### Frontend
+- **Chrome Extension** — Manifest V3, JavaScript
+- **Backend** — Python, Flask, Flask-CORS
+- **Scraping** — Requests, BeautifulSoup4
+- **Analysis** — Python regex, custom keyword dictionary
+- **Export** — Python CSV module
 
-- JavaScript
-- Chrome Extensions API
-- HTML
-- Manifest V3
-
-### Backend
-
-- Python
-- Flask
-- Flask-CORS
-- Regular Expressions
-- Excel export utilities
+---
 
 ## Project Structure
 
-```text
+```
 linkedin-analyser/
 │
-├── chrome-extension/
-│   ├── manifest.json
-│   ├── contentScript.js
-│   ├── popup.html
-│   └── popup.js
+├── chrome extension/
+│   ├── manifest.json        # Extension configuration
+│   ├── contentScript.js     # Reads keyword from LinkedIn URL, triggers download
+│   └── background.js        # Handles file download via Chrome Downloads API
 │
-├── backend/
-│   ├── app.py
-│   ├── analyzer.py
-│   ├── keywords.py
-│   ├── exporter.py
-│   └── scraper.py
-│
-└── README.md
+├── analyzer.py              # Keyword matching and categorisation logic
+├── scraper.py               # LinkedIn guest API scraping functions
+├── app.py                   # Flask server and consolidation logic
+└── keywords.py              # Skill dictionary organised by category
 ```
 
-## Core Components
+---
 
-### `manifest.json`
+## Setup
 
-Configures the Chrome extension:
+### Prerequisites
 
-- LinkedIn page access
-- script injection permissions
-- backend API communication permissions
+- Python 3.x
+- Google Chrome
+- Anaconda or pip
 
-### `contentScript.js`
-
-Responsible for:
-
-- detecting when LinkedIn job content loads
-- extracting job description text
-- sending data to Flask backend
-
-### `app.py`
-
-Flask API server that:
-
-- receives scraped content
-- exposes analysis endpoints
-- coordinates backend processing
-
-### `analyzer.py`
-
-Processes job descriptions and categorizes keywords into:
-
-- Technical Skills
-- Tools & Technologies
-- Frameworks & Libraries
-- Education
-- Certifications
-- Role Types
-
-### `keywords.py`
-
-Contains the curated keyword dictionary used for classification.
-
-### `exporter.py`
-
-Generates downloadable Excel reports.
-
-### `scraper.py`
-
-Contains LinkedIn scraping logic for job listings.
-
-## Installation
-
-## 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/ishika-sancheti/linkedin-analyser.git
+git clone https://github.com/yourusername/linkedin-analyser.git
+cd linkedin-analyser
 ```
 
-## 2. Backend Setup
-
-Create a virtual environment:
+### 2. Install Python dependencies
 
 ```bash
-python -m venv venv
+pip install flask flask-cors requests beautifulsoup4
 ```
 
-Activate it:
-
-### Windows
-
-```bash
-venv\Scripts\activate
-```
-
-### macOS/Linux
-
-```bash
-source venv/bin/activate
-```
-
-Install dependencies:
-
-```bash
-pip install flask flask-cors requests beautifulsoup4 openpyxl
-```
-
-Run the backend:
+### 3. Run the Flask backend
 
 ```bash
 python app.py
 ```
 
-Backend runs at:
-
-```text
-http://127.0.0.1:5000
+You should see:
+```
+Running on http://127.0.0.1:5000
 ```
 
-## 3. Chrome Extension Setup
+### 4. Load the Chrome extension
 
-Open Chrome:
+1. Open Chrome and go to `chrome://extensions`
+2. Enable **Developer Mode** in the top right
+3. Click **Load unpacked**
+4. Select the `chrome extension` folder from this project
 
-```text
-chrome://extensions/
+### 5. Use it
+
+1. Make sure Flask is running
+2. Go to [linkedin.com/jobs](https://linkedin.com/jobs)
+3. Search for any role — for example "Software Engineer" or "Data Analyst"
+4. Wait approximately 60 seconds while the extension scrapes and analyses 50 jobs
+5. A CSV file named `export.csv` will automatically download to your Downloads folder
+6. Open it in Excel to see the ranked skill list
+
+---
+
+## Important Notes
+
+**Flask must be running on your machine while using the extension.** This is a local tool — the backend runs on your computer, not on a remote server. Your friends cannot use this without setting up the backend themselves.
+
+**LinkedIn's guest API is used for scraping.** This operates in a grey area of LinkedIn's Terms of Service. Use responsibly and do not make excessive requests.
+
+**Results vary by search.** LinkedIn returns different job postings each time based on your location, filters, and LinkedIn's algorithm. The keyword used in search and your location settings affect which 50 jobs are analysed.
+
+---
+
+## Customising the Keyword Dictionary
+
+Open `keywords.py` to add or modify keywords. The dictionary is organised by category. All keywords must be lowercase. Multi-word keywords like `"machine learning"` are supported.
+
+```python
+keywords_list = {
+    "Technical Skills": ["python", "java", "machine learning", ...],
+    "Tools and Technologies": ["aws", "docker", "kubernetes", ...],
+    ...
+}
 ```
 
-Then:
+---
 
-1. Enable **Developer Mode**
-2. Click **Load unpacked**
-3. Select the Chrome extension folder
+## Known Limitations
 
-## Usage
+- Short keywords like `"c"` and `"go"` may produce false matches in some job descriptions
+- The extension only runs on LinkedIn job search result pages
+- Requires Flask to be running locally — not plug and play for end users
+- LinkedIn may occasionally block requests if too many are made in quick succession
 
-1. Start the Flask backend
-2. Open LinkedIn Jobs
-3. Search for a role (example: Software Engineer)
-4. Open job postings
-5. Extension extracts job description data
-6. Backend analyzes requirements
-7. Download Excel report
+---
 
-## Example Insights Generated
+## Built With
 
-The analyzer can identify:
+This project was built entirely from scratch as a learning exercise — from zero to a working Chrome extension with a Python backend, web scraping, text analysis, and file export.
 
-### Technical Skills
-
-- Python
-- Java
-- SQL
-- JavaScript
-- Machine Learning
-
-### Tools
-
-- AWS
-- Docker
-- Kubernetes
-- Git
-- Jenkins
-
-### Frameworks
-
-- React
-- Flask
-- Django
-- TensorFlow
-
-### Education
-
-- Bachelor's Degree
-- Master's Degree
-- B.Tech
-
-### Certifications
-
-- AWS Certified Solutions Architect
-- PMP
-- CISSP
-
-## Challenges Solved
-
-This project addresses practical engineering constraints:
-
-### LinkedIn Anti-Scraping Restrictions
-
-Traditional scraping applications can be blocked.
-
-Solution:
-
-- browser-side extraction via Chrome extension
-- backend processing for heavy analysis
-
-### Browser Extension Limitations
-
-Chrome extensions are not ideal for generating complex downloadable files.
-
-Solution:
-
-- delegate processing/export to Python backend
-
-## Learning Outcomes
-
-This project demonstrates:
-
-- browser extension development
-- DOM scraping
-- asynchronous JavaScript
-- Flask API development
-- client-server communication
-- regex-based NLP
-- data processing
-- report generation
-- software architecture design
-
+---
 
 ## License
 
-MIT License
-
-## Author
-
-**Ishika Sancheti**
-
-GitHub: https://github.com/ishika-sancheti
+MIT
