@@ -1,6 +1,6 @@
 # LinkedIn Job Analyser
 
-A Chrome extension that analyses LinkedIn job search results and tells you what skills, tools, frameworks, and qualifications are most in demand for any role — automatically.
+A Chrome extension that analyses LinkedIn job search results and tells you what skills, tools, frameworks, and qualifications are most in demand for any role automatically.
 
 Search for a role on LinkedIn, and the extension scrapes the top 50 job postings, analyses them, and downloads a ranked CSV report to your computer.
 
