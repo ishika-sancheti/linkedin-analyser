@@ -150,6 +150,8 @@ keywords_list = {
 
 This project was built entirely from scratch as a learning exercise — from zero to a working Chrome extension with a Python backend, web scraping, text analysis, and file export.
 
+Find all background information and BTS here: https://verbena-mosquito-eb3.notion.site/linkedin-job-requirements-analyser-project-347ff537cf3b80a8b183db028bf79b27?source=copy_link
+
 ---
 
 ## License
