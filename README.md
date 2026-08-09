@@ -23,13 +23,13 @@ When you search for a role on LinkedIn Jobs, the extension:
 
 The downloaded CSV contains:
 
-- **Technical Skills** — programming languages, methodologies, concepts
-- **Tools and Technologies** — cloud platforms, DevOps tools, software
-- **Frameworks and Libraries** — React, Django, TensorFlow, etc.
-- **Education** — degree requirements
-- **Certifications** — required certifications
-- **Experience** — role types and levels
-- **Companies** — which companies appeared in the 50 results and how many times
+- **Technical Skills** - programming languages, methodologies, concepts
+- **Tools and Technologies** - cloud platforms, DevOps tools, software
+- **Frameworks and Libraries** - React, Django, TensorFlow, etc.
+- **Education** - degree requirements
+- **Certifications** - required certifications
+- **Experience** - role types and levels
+- **Companies** - which companies appeared in the 50 results and how many times
 
 Each skill shows how many of the 50 job postings mentioned it, giving you a clear picture of what the market actually wants.
 
@@ -37,11 +37,11 @@ Each skill shows how many of the 50 job postings mentioned it, giving you a clea
 
 ## Tech Stack
 
-- **Chrome Extension** — Manifest V3, JavaScript
-- **Backend** — Python, Flask, Flask-CORS
-- **Scraping** — Requests, BeautifulSoup4
-- **Analysis** — Python regex, custom keyword dictionary
-- **Export** — Python CSV module
+- **Chrome Extension** - Manifest V3, JavaScript
+- **Backend** - Python, Flask, Flask-CORS
+- **Scraping** - Requests, BeautifulSoup4
+- **Analysis** - Python regex, custom keyword dictionary
+- **Export** - Python CSV module
 
 ---
 
@@ -115,15 +115,15 @@ Running on http://127.0.0.1:5000
 
 ## Important Notes
 
-**Flask must be running on your machine while using the extension.** This is a local tool — the backend runs on your computer, not on a remote server. Your friends cannot use this without setting up the backend themselves.
+**Flask must be running on your machine while using the extension.** This is a local tool - the backend runs on your computer, not on a remote server. You cannot use this without setting up the backend themselves.
 
-**LinkedIn's guest API is used for scraping.** This operates in a grey area of LinkedIn's Terms of Service. Use responsibly and do not make excessive requests.
+**LinkedIn's guest API is used for scraping.** Use responsibly and do not make excessive requests.
 
 **Results vary by search.** LinkedIn returns different job postings each time based on your location, filters, and LinkedIn's algorithm. The keyword used in search and your location settings affect which 50 jobs are analysed.
 
 ---
 
-## Customising the Keyword Dictionary
+## Customising the Keyword Dictionary - Future Improvements
 
 Open `keywords.py` to add or modify keywords. The dictionary is organised by category. All keywords must be lowercase. Multi-word keywords like `"machine learning"` are supported.
 
@@ -135,20 +135,9 @@ keywords_list = {
 }
 ```
 
----
-
-## Known Limitations
-
-- Short keywords like `"c"` and `"go"` may produce false matches in some job descriptions
-- The extension only runs on LinkedIn job search result pages
-- Requires Flask to be running locally — not plug and play for end users
-- LinkedIn may occasionally block requests if too many are made in quick succession
-
----
-
 ## Built With
 
-This project was built entirely from scratch as a learning exercise — from zero to a working Chrome extension with a Python backend, web scraping, text analysis, and file export.
+This project was built entirely from scratch as a learning exercise - from zero to a working Chrome extension with a Python backend, web scraping, text analysis, and file export.
 
 Find all background information and BTS here: https://verbena-mosquito-eb3.notion.site/linkedin-job-requirements-analyser-project-347ff537cf3b80a8b183db028bf79b27?source=copy_link
 
