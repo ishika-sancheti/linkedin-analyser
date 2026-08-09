@@ -106,7 +106,7 @@ Running on http://127.0.0.1:5000
 
 1. Make sure Flask is running
 2. Go to [linkedin.com/jobs](https://linkedin.com/jobs)
-3. Search for any role — for example "Software Engineer" or "Data Analyst"
+3. Search for any role - for example "Software Engineer" or "Data Analyst"
 4. Wait approximately 60 seconds while the extension scrapes and analyses 50 jobs
 5. A CSV file named `export.csv` will automatically download to your Downloads folder
 6. Open it in Excel to see the ranked skill list
