@@ -45,6 +45,9 @@ def generate_csv(consolidated, company_counts):
     your_csv_string.headers["Content-type"] = "text/csv"
     return your_csv_string
 
+@app.route('/')
+def home():
+    return "LinkedIn Analyser is running!"
     
 
 if __name__=='__main__':
