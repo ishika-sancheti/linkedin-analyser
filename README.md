@@ -113,32 +113,6 @@ Running on http://127.0.0.1:5000
 
 ---
 
-## Important Notes
-
-**Flask must be running on your machine while using the extension.** This is a local tool - the backend runs on your computer, not on a remote server. You cannot use this without setting up the backend themselves.
-
-**LinkedIn's guest API is used for scraping.** Use responsibly and do not make excessive requests.
-
-**Results vary by search.** LinkedIn returns different job postings each time based on your location, filters, and LinkedIn's algorithm. The keyword used in search and your location settings affect which 50 jobs are analysed.
-
----
-
-## Customising the Keyword Dictionary - Future Improvements
-
-Open `keywords.py` to add or modify keywords. The dictionary is organised by category. All keywords must be lowercase. Multi-word keywords like `"machine learning"` are supported.
-
-```python
-keywords_list = {
-    "Technical Skills": ["python", "java", "machine learning", ...],
-    "Tools and Technologies": ["aws", "docker", "kubernetes", ...],
-    ...
-}
-```
-
-## Built With
-
-This project was built entirely from scratch as a learning exercise - from zero to a working Chrome extension with a Python backend, web scraping, text analysis, and file export.
-
 Find all background information and BTS here: https://verbena-mosquito-eb3.notion.site/linkedin-job-requirements-analyser-project-347ff537cf3b80a8b183db028bf79b27?source=copy_link
 
 ---
